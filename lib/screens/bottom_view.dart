@@ -1,6 +1,8 @@
+import 'package:ECommerceApp/consts/my_icons.dart';
 import 'package:ECommerceApp/screens/bottom_search.dart';
 import 'package:ECommerceApp/screens/bottom_userInfo.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 
 import 'bottom_cart.dart';
 import 'bottom_feeds.dart';
@@ -38,7 +40,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
         child: SizedBox(
           height: kBottomNavigationBarHeight * 0.98,
           child: Container(
-            decoration: const BoxDecoration(
+            decoration:  BoxDecoration(
               color: Colors.white,
               border: Border(
                 top: BorderSide(
@@ -53,13 +55,13 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
               unselectedItemColor: Theme.of(context).textSelectionColor,
               selectedItemColor: Colors.purple,
               currentIndex: currentIndex,
-              items: const [
+              items:  [
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.home),
+                  icon: Icon(MyAppIcons.home),
                   label: 'Home',
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.rss_feed),
+                  icon: Icon(MyAppIcons.rss),
                   label: 'Feeds',
                 ),
                 BottomNavigationBarItem(
@@ -69,12 +71,12 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(
-                    Icons.shopping_bag,
+                    MyAppIcons.cart,
                   ),
                   label: 'Cart',
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.person),
+                  icon: Icon(MyAppIcons.user),
                   label: 'User',
                 ),
               ],
@@ -91,7 +93,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
           splashColor: Colors.grey,
           tooltip: 'Search',
           elevation: 4,
-          child: const Icon(Icons.search),
+          child:  Icon(MyAppIcons.search),
           onPressed: () => setState(() {
             currentIndex = 2;
           }),

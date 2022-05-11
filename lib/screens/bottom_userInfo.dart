@@ -1,4 +1,6 @@
 import 'package:ECommerceApp/consts/colors.dart';
+import 'package:ECommerceApp/consts/my_icons.dart';
+import 'package:ECommerceApp/screens/wishlist.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:list_tile_switch/list_tile_switch.dart';
@@ -115,7 +117,28 @@ class _BottomUserInfoState extends State<BottomUserInfo> {
                   children: [
                     Padding(
                         padding: const EdgeInsets.only(left: 8.0),
+                        child: userTitle(title: 'User Bag')),
+                    Divider(
+                      thickness: 1,
+                      color: Colors.grey,
+                    ),
+                    Material(
+      color: Colors.transparent,
+      child: InkWell(
+        splashColor: Theme.of(context).splashColor,
+        child: ListTile(
+          onTap: ()=>Navigator.of(context).pushNamed(WishlistScreen.routeName),
+          title: Text('Wishlist'),
+          leading: Icon(MyAppIcons.wishlist),
+          trailing: Icon(Icons.chevron_right_rounded),
+        ),
+      ),
+    ),
+                    Padding(
+                        padding: const EdgeInsets.only(left: 8.0),
                         child: userTitle(title: 'User Information')),
+                       
+                       
                     Divider(
                       thickness: 1,
                       color: Colors.grey,
@@ -123,19 +146,19 @@ class _BottomUserInfoState extends State<BottomUserInfo> {
                     userListTile(
                         title: 'Email',
                         subTitle: 'nguyenloi@gmail.com',
-                        icon: Icons.email),
+                        iconLeading: Icons.email),
                     userListTile(
                         title: 'Phone number',
                         subTitle: '0898 066 957',
-                        icon: Icons.phone),
+                        iconLeading: Icons.phone),
                     userListTile(
                         title: 'Shipping address',
                         subTitle: '1419 Hung vuong',
-                        icon: Icons.local_shipping),
+                        iconLeading: Icons.local_shipping),
                     userListTile(
                         title: 'Joined date',
                         subTitle: 'Date',
-                        icon: Icons.watch_later),
+                        iconLeading: Icons.watch_later),
                     Padding(
                       padding: const EdgeInsets.only(left: 8.0),
                       child: userTitle(title: 'User settings'),
@@ -145,7 +168,7 @@ class _BottomUserInfoState extends State<BottomUserInfo> {
                       color: Colors.grey,
                     ),
                     ListTileSwitch(
-                     value: themeChange.darkTheme,
+                      value: themeChange.darkTheme,
                       leading: Icon(Ionicons.md_moon),
                       onChanged: (value) {
                         setState(() {
@@ -160,7 +183,7 @@ class _BottomUserInfoState extends State<BottomUserInfo> {
                     userListTile(
                         title: 'Logout',
                         subTitle: '',
-                        icon: Icons.exit_to_app_rounded)
+                        iconLeading: Icons.exit_to_app_rounded)
                   ],
                 ),
               )
@@ -233,13 +256,14 @@ class userTitle extends StatelessWidget {
 }
 
 class userListTile extends StatelessWidget {
-  final String title, subTitle;
-  final IconData icon;
+  final String title;
+  final String  subTitle;
+  final IconData iconLeading;
   userListTile({
     Key? key,
     required this.title,
-    required this.subTitle,
-    required this.icon,
+   required this.subTitle,
+   required  this.iconLeading,
   }) : super(key: key);
 
   @override
@@ -249,7 +273,10 @@ class userListTile extends StatelessWidget {
       child: InkWell(
         splashColor: Theme.of(context).splashColor,
         child: ListTile(
-            title: Text(title), subtitle: Text(subTitle), leading: Icon(icon)),
+          title: Text(title),
+          subtitle: Text(subTitle),
+          leading: Icon(iconLeading),
+        ),
       ),
     );
   }

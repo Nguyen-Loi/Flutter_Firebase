@@ -1,6 +1,11 @@
 import 'package:ECommerceApp/consts/theme_data.dart';
+import 'package:ECommerceApp/inner_screens/brands_navigation_rail.dart';
+import 'package:ECommerceApp/inner_screens/product_details.dart';
 import 'package:ECommerceApp/provider/dark_theme_provider.dart';
+import 'package:ECommerceApp/screens/bottom_cart.dart';
+import 'package:ECommerceApp/screens/bottom_feeds.dart';
 import 'package:ECommerceApp/screens/bottom_view.dart';
+import 'package:ECommerceApp/screens/wishlist.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
@@ -42,8 +47,15 @@ class _MyAppState extends State<MyApp> {
             return MaterialApp(
               title: 'Flutter Demo',
               theme: Styles.themeData(themeChangeProvider.darkTheme, context),
-              home: BottomViewScreen(),
-              //initialRoute: '/',
+              home: ProductDetails(),
+              routes: {
+              //   '/': (ctx) => LandingPage(),
+              BrandNavigationRailScreen.routeName: (ctx) =>
+                  BrandNavigationRailScreen(),
+              BottomCart.routeName: (ctx) => BottomCart(),
+              BottomFeeds.routeName: (ctx) => BottomFeeds(),
+              WishlistScreen.routeName: (ctx) => WishlistScreen(),
+            },
             );
           }));
     });

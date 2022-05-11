@@ -2,6 +2,8 @@ import 'package:ECommerceApp/consts/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:list_tile_switch/list_tile_switch.dart';
+import 'package:provider/provider.dart';
+import 'package:ECommerceApp/provider/dark_theme_provider.dart';
 
 class BottomUserInfo extends StatefulWidget {
   @override
@@ -9,51 +11,22 @@ class BottomUserInfo extends StatefulWidget {
 }
 
 class _BottomUserInfoState extends State<BottomUserInfo> {
-  bool _value = false;
-  late ScrollController _scrollController = ScrollController();
+  late ScrollController _scrollController;
   var top = 0.0;
 
-  Widget _buildFab() {
-    //starting fab position
-    final double defaultTopMargin = 200.0 - 4.0;
-    //pixels from top where scaling should start
-    final double scaleStart = 160.0;
-    //pixels from top where scaling should end
-    final double scaleEnd = scaleStart / 2;
-
-    double top = defaultTopMargin;
-    double scale = 1.0;
-    if (_scrollController.hasClients) {
-      double offset = _scrollController.offset;
-      top -= offset;
-      if (offset < defaultTopMargin - scaleStart) {
-        //offset small => don't scale down
-        scale = 1.0;
-      } else if (offset < defaultTopMargin - scaleEnd) {
-        //offset between scaleStart and scaleEnd => scale down
-        scale = (defaultTopMargin - scaleEnd - offset) / scaleEnd;
-      } else {
-        //offset passed scaleEnd => hide fab
-        scale = 0.0;
-      }
-    }
-
-return  Positioned(
-      top: top,
-      right: 16.0,
-      child:  Transform(
-        transform:  Matrix4.identity()..scale(scale),
-        alignment: Alignment.center,
-        child:  FloatingActionButton(
-          heroTag: "btn1",
-          onPressed: (){},
-          child:  Icon(Icons.camera_alt_outlined),
-        ),
-      ),
-    );
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _scrollController = ScrollController();
+    _scrollController.addListener(() {
+      setState(() {});
+    });
   }
- @override
+
+  @override
   Widget build(BuildContext context) {
+    final themeChange = Provider.of<DarkThemeProvider>(context);
     return Scaffold(
       body: Stack(
         children: [
@@ -65,8 +38,8 @@ return  Positioned(
                 elevation: 4,
                 expandedHeight: 200,
                 pinned: true,
-                flexibleSpace: LayoutBuilder(
-                    builder: (BuildContext context, BoxConstraints constraints) {
+                flexibleSpace: LayoutBuilder(builder:
+                    (BuildContext context, BoxConstraints constraints) {
                   top = constraints.biggest.height;
                   return Container(
                     decoration: BoxDecoration(
@@ -147,20 +120,22 @@ return  Positioned(
                       thickness: 1,
                       color: Colors.grey,
                     ),
-                      userListTile(
-              title: 'Email',
-              subTitle: 'nguyenloi@gmail.com',
-              icon: Icons.email),
-          userListTile(
-              title: 'Phone number',
-              subTitle: '0898 066 957',
-              icon: Icons.phone),
-          userListTile(
-              title: 'Shipping address',
-              subTitle: '1419 Hung vuong',
-              icon: Icons.local_shipping),
-          userListTile(
-              title: 'Joined date', subTitle: 'Date', icon: Icons.watch_later),
+                    userListTile(
+                        title: 'Email',
+                        subTitle: 'nguyenloi@gmail.com',
+                        icon: Icons.email),
+                    userListTile(
+                        title: 'Phone number',
+                        subTitle: '0898 066 957',
+                        icon: Icons.phone),
+                    userListTile(
+                        title: 'Shipping address',
+                        subTitle: '1419 Hung vuong',
+                        icon: Icons.local_shipping),
+                    userListTile(
+                        title: 'Joined date',
+                        subTitle: 'Date',
+                        icon: Icons.watch_later),
                     Padding(
                       padding: const EdgeInsets.only(left: 8.0),
                       child: userTitle(title: 'User settings'),
@@ -170,11 +145,11 @@ return  Positioned(
                       color: Colors.grey,
                     ),
                     ListTileSwitch(
-                      value: _value,
+                     value: themeChange.darkTheme,
                       leading: Icon(Ionicons.md_moon),
                       onChanged: (value) {
                         setState(() {
-                          _value = value;
+                          themeChange.darkTheme = value;
                         });
                       },
                       visualDensity: VisualDensity.comfortable,
@@ -183,7 +158,9 @@ return  Positioned(
                       title: Text('Dark theme'),
                     ),
                     userListTile(
-              title: 'Logout', subTitle: '', icon: Icons.exit_to_app_rounded)
+                        title: 'Logout',
+                        subTitle: '',
+                        icon: Icons.exit_to_app_rounded)
                   ],
                 ),
               )
@@ -191,6 +168,46 @@ return  Positioned(
           ),
           _buildFab()
         ],
+      ),
+    );
+  }
+
+  Widget _buildFab() {
+    //starting fab position
+    final double defaultTopMargin = 200.0 - 4.0;
+    //pixels from top where scaling should start
+    final double scaleStart = 160.0;
+    //pixels from top where scaling should end
+    final double scaleEnd = scaleStart / 2;
+
+    double top = defaultTopMargin;
+    double scale = 1.0;
+    if (_scrollController.hasClients) {
+      double offset = _scrollController.offset;
+      top -= offset;
+      if (offset < defaultTopMargin - scaleStart) {
+        //offset small => don't scale down
+        scale = 1.0;
+      } else if (offset < defaultTopMargin - scaleEnd) {
+        //offset between scaleStart and scaleEnd => scale down
+        scale = (defaultTopMargin - scaleEnd - offset) / scaleEnd;
+      } else {
+        //offset passed scaleEnd => hide fab
+        scale = 0.0;
+      }
+    }
+
+    return Positioned(
+      top: top,
+      right: 16.0,
+      child: Transform(
+        transform: Matrix4.identity()..scale(scale),
+        alignment: Alignment.center,
+        child: FloatingActionButton(
+          heroTag: "btn1",
+          onPressed: () {},
+          child: Icon(Icons.camera_alt_outlined),
+        ),
       ),
     );
   }

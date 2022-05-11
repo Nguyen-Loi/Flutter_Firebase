@@ -8,12 +8,12 @@ import 'bottom_cart.dart';
 import 'bottom_feeds.dart';
 import 'bottom_home.dart';
 
-class BottomBarScreen extends StatefulWidget {
+class BottomViewScreen extends StatefulWidget {
   @override
-  _BottomBarScreenState createState() => _BottomBarScreenState();
+  _BottomViewScreenState createState() => _BottomViewScreenState();
 }
 
-class _BottomBarScreenState extends State<BottomBarScreen> {
+class _BottomViewScreenState extends State<BottomViewScreen> {
   int currentIndex = 0;
   List<Widget> body = [
     BottomHome(),
@@ -40,7 +40,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
         child: SizedBox(
           height: kBottomNavigationBarHeight * 0.98,
           child: Container(
-            decoration:  BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.white,
               border: Border(
                 top: BorderSide(
@@ -55,7 +55,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
               unselectedItemColor: Theme.of(context).textSelectionColor,
               selectedItemColor: Colors.purple,
               currentIndex: currentIndex,
-              items:  [
+              items: [
                 BottomNavigationBarItem(
                   icon: Icon(MyAppIcons.home),
                   label: 'Home',
@@ -64,7 +64,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
                   icon: Icon(MyAppIcons.rss),
                   label: 'Feeds',
                 ),
-                BottomNavigationBarItem(
+                const BottomNavigationBarItem(
                   activeIcon: null,
                   icon: Icon(null),
                   label: 'Search',
@@ -93,7 +93,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
           splashColor: Colors.grey,
           tooltip: 'Search',
           elevation: 4,
-          child:  Icon(MyAppIcons.search),
+          child: Icon(MyAppIcons.search),
           onPressed: () => setState(() {
             currentIndex = 2;
           }),

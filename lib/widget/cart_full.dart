@@ -102,6 +102,7 @@ class _CartFullState extends State<CartFull> {
                     ],
                   ),
                   Row(
+                    
                     children: [
                       Text(
                         'Ships Free',
@@ -123,32 +124,13 @@ class _CartFullState extends State<CartFull> {
                               child: Icon(
                                 Entypo.minus,
                                 color: Colors.red,
-                                size: 22,
+                                size: 17,
                               ),
                             ),
                           ),
                         ),
                       ),
-                      Card(
-                        elevation: 12,
-                        child: Container(
-                          width: MediaQuery.of(context).size.width * 0.12,
-                          padding: const EdgeInsets.all(8.0),
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(colors: [
-                              ColorsConsts.gradiendLStart,
-                              ColorsConsts.gradiendLEnd,
-                            ], stops: [
-                              0.0,
-                              0.7
-                            ]),
-                          ),
-                          child: Text(
-                            '154',
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      ),
+                      Text('132'),
                       Material(
                         color: Colors.transparent,
                         child: InkWell(
@@ -161,7 +143,7 @@ class _CartFullState extends State<CartFull> {
                               child: Icon(
                                 Entypo.plus,
                                 color: Colors.green,
-                                size: 22,
+                                size: 17,
                               ),
                             ),
                           ),

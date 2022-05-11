@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
+import 'package:list_tile_switch/list_tile_switch.dart';
 
-class BottomUserInfo extends StatelessWidget {
+class BottomUserInfo extends StatefulWidget {
+  @override
+  State<BottomUserInfo> createState() => _BottomUserInfoState();
+}
+
+class _BottomUserInfoState extends State<BottomUserInfo> {
+  bool _value = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,6 +35,26 @@ class BottomUserInfo extends StatelessWidget {
               icon: Icons.local_shipping),
           userListTile(
               title: 'Joined date', subTitle: 'Date', icon: Icons.watch_later),
+          Padding(
+            padding: EdgeInsets.only(left: 8.0),
+            child: userTitle(title: 'User setting'),
+          ),
+          Divider(thickness: 1, color: Colors.grey),
+          ListTileSwitch(
+            value: _value,
+            leading: Icon(Ionicons.md_moon),
+            onChanged: (value) {
+              setState(() {
+                _value = value;
+              });
+            },
+            visualDensity: VisualDensity.comfortable,
+            switchType: SwitchType.cupertino,
+            switchActiveColor: Colors.indigo,
+            title: Text('Dart theme'),
+          ),
+           userListTile(
+              title: 'Logout', subTitle: '', icon: Icons.exit_to_app_rounded)
         ],
       ),
     );

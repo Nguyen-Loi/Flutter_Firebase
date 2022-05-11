@@ -71,7 +71,7 @@ class _BottomViewScreenState extends State<BottomViewScreen> {
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(
-                    MyAppIcons.cart,
+                    MyAppIcons.bag,
                   ),
                   label: 'Cart',
                 ),

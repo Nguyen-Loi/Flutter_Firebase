@@ -84,7 +84,6 @@ return  Positioned(
                       collapseMode: CollapseMode.parallax,
                       centerTitle: true,
                       title: Row(
-                        //  mainAxisAlignment: MainAxisAlignment.spaceAround,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           AnimatedOpacity(
@@ -190,7 +189,7 @@ return  Positioned(
               )
             ],
           ),
-       
+          _buildFab()
         ],
       ),
     );
@@ -206,9 +205,12 @@ class userTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      title,
-      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
+    return Padding(
+      padding: EdgeInsets.all(8.0),
+      child: Text(
+        title,
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
+      ),
     );
   }
 }

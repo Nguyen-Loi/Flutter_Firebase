@@ -1,8 +1,12 @@
+
+import 'package:ECommerceApp/provider/products_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'brands_rail_widget.dart';
 
 class BrandNavigationRailScreen extends StatefulWidget {
+
 
   static const routeName = '/brands_navigation_rail';
   @override
@@ -13,13 +17,13 @@ class BrandNavigationRailScreen extends StatefulWidget {
 class _BrandNavigationRailScreenState extends State<BrandNavigationRailScreen> {
   int _selectedIndex = 0;
   final padding = 8.0;
-  String? routeArgs;
-  String? brand;
+  String routeArgs='';
+  String brand='';
   @override
   void didChangeDependencies() {
     routeArgs = ModalRoute.of(context)!.settings.arguments.toString();
     _selectedIndex = int.parse(
-      routeArgs!.substring(1, 2),
+      routeArgs.substring(1, 2),
     );
     print(routeArgs.toString());
     if (_selectedIndex == 0) {
@@ -173,7 +177,7 @@ class _BrandNavigationRailScreenState extends State<BrandNavigationRailScreen> {
           ),
           // This is the main content.
 
-          ContentSpace(context, brand!)
+          ContentSpace(context, brand)
         ],
       ),
     );
@@ -202,6 +206,15 @@ class ContentSpace extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final productsData = Provider.of<ProductProvider>(context, listen: false);
+    final productsBrand = productsData.findByBrand(brand);
+    if(brand=='All'){
+      for(int i=0; i<productsData.getProducts.length;i++){
+        productsBrand.add(productsData.getProducts[i]);
+      }
+    }
+    print('productsBrand ${productsBrand[0].imageUrl}');
+    print('brand $brand');
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.fromLTRB(24, 8, 0, 0),
@@ -209,9 +222,10 @@ class ContentSpace extends StatelessWidget {
           removeTop: true,
           context: context,
           child: ListView.builder(
-            itemCount: 5,
+            itemCount: productsBrand.length,
             itemBuilder: (BuildContext context, int index) =>
-                BrandsNavigationRail(),
+                ChangeNotifierProvider.value(
+                    value: productsBrand[index], child: BrandsNavigationRail()),
           ),
         ),
       ),

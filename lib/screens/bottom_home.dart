@@ -1,5 +1,6 @@
 import 'package:ECommerceApp/consts/colors.dart';
 import 'package:ECommerceApp/inner_screens/brands_navigation_rail.dart';
+import 'package:ECommerceApp/provider/products_provider.dart';
 import 'package:ECommerceApp/widget/backlayer.dart';
 import 'package:ECommerceApp/widget/category.dart';
 import 'package:ECommerceApp/widget/popular_products.dart';
@@ -7,6 +8,7 @@ import 'package:backdrop/backdrop.dart';
 import 'package:flutter/material.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:carousel_pro/carousel_pro.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 class BottomHome extends StatelessWidget {
@@ -28,6 +30,9 @@ class BottomHome extends StatelessWidget {
   ];
   @override
   Widget build(BuildContext context) {
+
+    final productsData = Provider.of<ProductProvider>(context);
+    final popularItems = productsData.popularProducts;
   return Scaffold(
       body: BackdropScaffold(
         frontLayerBackgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -195,9 +200,12 @@ class BottomHome extends StatelessWidget {
                 margin: EdgeInsets.symmetric(horizontal: 3),
                 child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    itemCount: 8,
+                    itemCount: popularItems.length,
                     itemBuilder: (BuildContext ctx, int index) {
-                      return PopularProducts();
+                      return ChangeNotifierProvider.value(
+                        value: popularItems[index],
+                        child: PopularProducts()
+                      );
                     }),
               )
             ],

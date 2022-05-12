@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:ECommerceApp/inner_screens/categories_feeds.dart';
-import 'package:ECommerceApp/screens/bottom_feeds.dart';
 
 class CategoryWidget extends StatefulWidget {
-
+ 
   final int index;
   const CategoryWidget({
     Key? key,

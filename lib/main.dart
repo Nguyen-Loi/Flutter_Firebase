@@ -1,5 +1,6 @@
 import 'package:ECommerceApp/consts/theme_data.dart';
 import 'package:ECommerceApp/inner_screens/brands_navigation_rail.dart';
+import 'package:ECommerceApp/inner_screens/categories_feeds.dart';
 import 'package:ECommerceApp/inner_screens/product_details.dart';
 import 'package:ECommerceApp/provider/dark_theme_provider.dart';
 import 'package:ECommerceApp/provider/products_provider.dart';
@@ -56,7 +57,7 @@ class _MyAppState extends State<MyApp> {
               BottomFeeds.routeName: (ctx) => BottomFeeds(),
               WishlistScreen.routeName: (ctx) => WishlistScreen(),
                 ProductDetails.routeName: (ctx) => ProductDetails(),
-              // CategoriesFeedsScreen.routeName: (ctx) => CategoriesFeedsScreen(),
+              CategoriesFeedsScreen.routeName: (ctx) => CategoriesFeedsScreen(),
             },
             );
           }));

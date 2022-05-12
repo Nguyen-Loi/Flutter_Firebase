@@ -8,6 +8,7 @@ import 'package:ECommerceApp/screens/bottom_cart.dart';
 
 import 'package:ECommerceApp/screens/wishlist.dart';
 import 'package:ECommerceApp/widget/feeds_products.dart';
+import 'package:ECommerceApp/widget/popular_products.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,42 +24,42 @@ class _ProductDetailsState extends State<ProductDetails> {
 
   @override
   Widget build(BuildContext context) {
-    final productsProvider = Provider.of<ProductProvider>(context);
-    List<Product> productsList= productsProvider.getProducts ;
+    final productsProvider =
+        Provider.of<ProductProvider>(context);
+    final productsList = productsProvider.getProducts;
     final themeState = Provider.of<DarkThemeProvider>(context);
     final productId = ModalRoute.of(context)?.settings.arguments as String;
-    final prodAttr =productsProvider.findById(productId);
-    
+    final prodAttr = productsProvider.findById(productId);
+
     return Scaffold(
       appBar: AppBar(
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              centerTitle: true,
-              title: Text(
-                "DETAIL",
-                style:
-                    TextStyle(fontSize: 16.0, fontWeight: FontWeight.normal),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          centerTitle: true,
+          title: Text(
+            "DETAIL",
+            style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.normal),
+          ),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(
+                MyAppIcons.wishlist,
+                color: ColorsConsts.favColor,
               ),
-              actions: <Widget>[
-                IconButton(
-                  icon: Icon(
-                    MyAppIcons.wishlist,
-                    color: ColorsConsts.favColor,
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).pushNamed(WishlistScreen.routeName);
-                  },
-                ),
-                IconButton(
-                  icon: Icon(
-                    MyAppIcons.cart,
-                    color: ColorsConsts.cartColor,
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).pushNamed(BottomCart.routeName);
-                  },
-                ),
-              ]),
+              onPressed: () {
+                Navigator.of(context).pushNamed(WishlistScreen.routeName);
+              },
+            ),
+            IconButton(
+              icon: Icon(
+                MyAppIcons.cart,
+                color: ColorsConsts.cartColor,
+              ),
+              onPressed: () {
+                Navigator.of(context).pushNamed(BottomCart.routeName);
+              },
+            ),
+          ]),
       body: Stack(
         children: [
           SingleChildScrollView(
@@ -67,13 +68,13 @@ class _ProductDetailsState extends State<ProductDetails> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Container(
-            foregroundDecoration: BoxDecoration(color: Colors.black12),
-            height: MediaQuery.of(context).size.height * 0.45,
-            width: double.infinity,
-            child: Image.network(
-              prodAttr.imageUrl,
-            ),
-          ),
+                  foregroundDecoration: BoxDecoration(color: Colors.black12),
+                  height: MediaQuery.of(context).size.height * 0.45,
+                  width: double.infinity,
+                  child: Image.network(
+                    prodAttr.imageUrl,
+                  ),
+                ),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Row(
@@ -152,7 +153,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                           ],
                         ),
                       ),
-          
+
                       const SizedBox(height: 3.0),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -186,9 +187,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                         ),
                       ),
                       _details(themeState.darkTheme, 'Brand: ', prodAttr.brand),
-                      _details(themeState.darkTheme, 'Quantity: ', '${prodAttr.quantity}'),
-                      _details(themeState.darkTheme, 'Category: ', prodAttr.productCategoryName),
-                      _details(themeState.darkTheme, 'Popularity: ', prodAttr.isPopular? 'Popular' : 'Barely known'),
+                      _details(themeState.darkTheme, 'Quantity: ',
+                          '${prodAttr.quantity}'),
+                      _details(themeState.darkTheme, 'Category: ',
+                          prodAttr.productCategoryName),
+                      _details(themeState.darkTheme, 'Popularity: ',
+                          prodAttr.isPopular ? 'Popular' : 'Barely known'),
                       SizedBox(
                         height: 15,
                       ),
@@ -197,7 +201,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         color: Colors.grey,
                         height: 1,
                       ),
-          
+
                       // const SizedBox(height: 15.0),
                       Container(
                         color: Theme.of(context).backgroundColor,
@@ -253,7 +257,19 @@ class _ProductDetailsState extends State<ProductDetails> {
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
                   ),
                 ),
-                
+                Container(
+                  margin: EdgeInsets.only(bottom: 30),
+                  width: double.infinity,
+                  height: 340,
+                  child: ListView.builder(
+                    itemCount: productsList.length,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (BuildContext ctx, int index) {
+                      return ChangeNotifierProvider.value(
+                          value: productsList[index], child: PopularProducts());
+                    },
+                  ),
+                ),
               ],
             ),
           ),
@@ -317,9 +333,7 @@ class _ProductDetailsState extends State<ProductDetails> {
             ]),
           )
         ],
-        
       ),
-      
     );
   }
 

@@ -9,7 +9,7 @@ class Product with ChangeNotifier {
   final String productCategoryName;
   final String brand;
   final int quantity;
-  final bool isFavorite;
+  final bool? isFavorite;
   final bool isPopular;
   Product({
     required this.id,
@@ -20,7 +20,7 @@ class Product with ChangeNotifier {
     required this.productCategoryName,
     required this.brand,
     required this.quantity,
-    required this.isFavorite,
+     this.isFavorite,
     required this.isPopular,
   });
 

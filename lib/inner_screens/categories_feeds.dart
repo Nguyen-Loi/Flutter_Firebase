@@ -1,15 +1,18 @@
-import 'package:ECommerceApp/models/product.dart';
+
 import 'package:ECommerceApp/provider/products_provider.dart';
 import 'package:ECommerceApp/widget/feeds_products.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class BottomFeeds extends StatelessWidget {
-  static const routeName = '/Feeds';
+class CategoriesFeedsScreen extends StatelessWidget {
+  
+  static const routeName = '/CategoriesFeedsScreen';
   @override
   Widget build(BuildContext context) {
-    final productsProvider = Provider.of<ProductProvider>(context);
-    List<Product> productsList= productsProvider.getProducts ;
+    final productsProvider = Provider.of<ProductProvider>(context, listen: false);
+    final categoryName = ModalRoute.of(context)?.settings.arguments as String;
+    print(categoryName);
+    final productsList= productsProvider.findByCategory(categoryName);
     return Scaffold(
         body: GridView.count(
       crossAxisCount: 2,

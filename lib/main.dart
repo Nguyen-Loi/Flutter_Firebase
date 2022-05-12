@@ -2,6 +2,7 @@ import 'package:ECommerceApp/consts/theme_data.dart';
 import 'package:ECommerceApp/inner_screens/brands_navigation_rail.dart';
 import 'package:ECommerceApp/inner_screens/product_details.dart';
 import 'package:ECommerceApp/provider/dark_theme_provider.dart';
+import 'package:ECommerceApp/provider/products_provider.dart';
 import 'package:ECommerceApp/screens/bottom_cart.dart';
 import 'package:ECommerceApp/screens/bottom_feeds.dart';
 import 'package:ECommerceApp/screens/bottom_view.dart';
@@ -38,16 +39,15 @@ class _MyAppState extends State<MyApp> {
     return Sizer(builder: (context, orientation, deviceType) {
       return MultiProvider(
           providers: [
-            ChangeNotifierProvider(create: (_) {
-              return themeChangeProvider;
-            })
+            ChangeNotifierProvider(create: (_) => themeChangeProvider),
+             ChangeNotifierProvider(create: (_) => ProductProvider()),
           ],
           child:
               Consumer<DarkThemeProvider>(builder: (context, themeData, child) {
             return MaterialApp(
               title: 'Flutter Demo',
               theme: Styles.themeData(themeChangeProvider.darkTheme, context),
-              home: ProductDetails(),
+              home: BottomViewScreen(),
               routes: {
               //   '/': (ctx) => LandingPage(),
               BrandNavigationRailScreen.routeName: (ctx) =>
@@ -55,6 +55,8 @@ class _MyAppState extends State<MyApp> {
               BottomCart.routeName: (ctx) => BottomCart(),
               BottomFeeds.routeName: (ctx) => BottomFeeds(),
               WishlistScreen.routeName: (ctx) => WishlistScreen(),
+                ProductDetails.routeName: (ctx) => ProductDetails(),
+              // CategoriesFeedsScreen.routeName: (ctx) => CategoriesFeedsScreen(),
             },
             );
           }));

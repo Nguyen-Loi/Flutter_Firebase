@@ -21,7 +21,7 @@ class _CartFullState extends State<CartFull> {
           bottomRight: const Radius.circular(16.0),
           topRight: const Radius.circular(16.0),
         ),
-        color: Colors.blue,
+        color: Theme.of(context).backgroundColor,
       ),
       child: Row(
         children: [

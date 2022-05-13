@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:ECommerceApp/consts/colors.dart';
 import 'package:ECommerceApp/consts/my_icons.dart';
 import 'package:ECommerceApp/models/product.dart';
+import 'package:ECommerceApp/provider/cart_provider.dart';
 import 'package:ECommerceApp/provider/dark_theme_provider.dart';
 import 'package:ECommerceApp/provider/products_provider.dart';
 import 'package:ECommerceApp/screens/bottom_cart.dart';
@@ -24,12 +25,12 @@ class _ProductDetailsState extends State<ProductDetails> {
 
   @override
   Widget build(BuildContext context) {
-    final productsProvider =
-        Provider.of<ProductProvider>(context);
+    final productsProvider = Provider.of<ProductProvider>(context);
     final productsList = productsProvider.getProducts;
     final themeState = Provider.of<DarkThemeProvider>(context);
     final productId = ModalRoute.of(context)?.settings.arguments as String;
     final prodAttr = productsProvider.findById(productId);
+    final cartProvider = Provider.of<CartProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -284,9 +285,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     shape: RoundedRectangleBorder(side: BorderSide.none),
                     color: Colors.redAccent.shade400,
-                    onPressed: () {},
+                    onPressed: cartProvider.getCartItems.containsKey(productId)?(){}: () {
+                      cartProvider.addProductToCart(productId, prodAttr.price,
+                          prodAttr.title, prodAttr.imageUrl);
+                    },
                     child: Text(
-                      'Add to Cart'.toUpperCase(),
+                      cartProvider.getCartItems.containsKey(productId)?'In Cart' :'Add to Cart'.toUpperCase(),
                       style: TextStyle(fontSize: 16, color: Colors.white),
                     ),
                   ),

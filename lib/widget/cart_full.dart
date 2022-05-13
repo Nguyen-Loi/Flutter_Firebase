@@ -1,10 +1,26 @@
-import 'package:ECommerceApp/consts/colors.dart';
-import 'package:ECommerceApp/provider/dark_theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:provider/provider.dart';
 
+import 'package:ECommerceApp/consts/colors.dart';
+import 'package:ECommerceApp/provider/dark_theme_provider.dart';
+
 class CartFull extends StatefulWidget {
+  final String id;
+  final String productId;
+  final double price;
+  final int quatity;
+  final String title;
+  final String imageUrl;
+  const CartFull({
+    Key? key,
+    required this.id,
+    required this.productId,
+    required this.price,
+    required this.quatity,
+    required this.title,
+    required this.imageUrl,
+  }) : super(key: key);
   @override
   _CartFullState createState() => _CartFullState();
 }
@@ -30,7 +46,7 @@ class _CartFullState extends State<CartFull> {
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: NetworkImage(
-                    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4PdHtXka2-bDDww6Nuect3Mt9IwpE4v4HNw&usqp=CAU'),
+                    widget.imageUrl),
                 fit: BoxFit.fill,
               ),
             ),
@@ -45,7 +61,7 @@ class _CartFullState extends State<CartFull> {
                     children: [
                       Flexible(
                         child: Text(
-                          'title',
+                          widget.title,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
@@ -78,7 +94,7 @@ class _CartFullState extends State<CartFull> {
                         width: 5,
                       ),
                       Text(
-                        '450\$',
+                        '${widget.price}\$',
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.w600),
                       ),
@@ -91,7 +107,7 @@ class _CartFullState extends State<CartFull> {
                         width: 5,
                       ),
                       Text(
-                        '450\$',
+                        '${widget.quatity}\$',
                         style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
@@ -102,7 +118,6 @@ class _CartFullState extends State<CartFull> {
                     ],
                   ),
                   Row(
-                    
                     children: [
                       Text(
                         'Ships Free',
@@ -130,7 +145,7 @@ class _CartFullState extends State<CartFull> {
                           ),
                         ),
                       ),
-                      Text('132'),
+                      Text(widget.quatity.toString()),
                       Material(
                         color: Colors.transparent,
                         child: InkWell(

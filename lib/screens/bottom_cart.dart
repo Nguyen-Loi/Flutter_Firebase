@@ -1,18 +1,20 @@
 import 'package:ECommerceApp/consts/colors.dart';
 import 'package:ECommerceApp/consts/my_icons.dart';
+import 'package:ECommerceApp/provider/cart_provider.dart';
 import 'package:ECommerceApp/widget/cart_empty.dart';
 import 'package:ECommerceApp/widget/cart_full.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class BottomCart extends StatelessWidget {
- 
- List products = [];
+  
 
- static const routeName = '/CartScreen';
+  static const routeName = '/CartScreen';
   @override
- Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
+    final cartProvider = Provider.of<CartProvider>(context);
     List products = [];
-    return !products.isEmpty
+    return cartProvider.getCartItems.isEmpty
         ? Scaffold(body: CartEmpty())
         : Scaffold(
             bottomSheet: checkoutSection(context),
@@ -28,15 +30,20 @@ class BottomCart extends StatelessWidget {
             body: Container(
               margin: EdgeInsets.only(bottom: 60),
               child: ListView.builder(
-                  itemCount: 5,
+                  itemCount: cartProvider.getCartItems.length,
                   itemBuilder: (BuildContext ctx, int index) {
-                    return CartFull();
+                    return CartFull(id: cartProvider.getCartItems.values.toList()[index].id,
+                     productId: cartProvider.getCartItems.keys.toList()[index],
+                      price: cartProvider.getCartItems.values.toList()[index].price,
+                       quatity:cartProvider.getCartItems.values.toList()[index].quantity,
+                        title: cartProvider.getCartItems.values.toList()[index].title,
+                         imageUrl: cartProvider.getCartItems.values.toList()[index].imageUrl,);
                   }),
             ),
           );
   }
 
-   Widget checkoutSection(BuildContext ctx) {
+  Widget checkoutSection(BuildContext ctx) {
     return Container(
         decoration: BoxDecoration(
           border: Border(
@@ -102,6 +109,4 @@ class BottomCart extends StatelessWidget {
           ),
         ));
   }
-
-
 }

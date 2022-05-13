@@ -1,5 +1,6 @@
 import 'package:ECommerceApp/inner_screens/product_details.dart';
 import 'package:ECommerceApp/models/product.dart';
+import 'package:ECommerceApp/provider/cart_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:provider/provider.dart';
@@ -7,6 +8,8 @@ import 'package:provider/provider.dart';
 class PopularProducts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final cartProvider = Provider.of<CartProvider>(context);
+
     final productsPopular = Provider.of<Product>(context);
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -105,12 +108,20 @@ class PopularProducts extends StatelessWidget {
                           Material(
                             color: Colors.transparent,
                             child: InkWell(
-                              onTap: () {},
-                              borderRadius: BorderRadius.circular(30.0),
+                                borderRadius: BorderRadius.circular(30.0),
+                              onTap: 
+                                cartProvider.getCartItems.containsKey(productsPopular.id)?(){
+                                 
+                                }: () {
+                      cartProvider.addProductToCart(productsPopular.id, productsPopular.price,
+                          productsPopular.title, productsPopular.imageUrl);
+                    },
+                              
+                            
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Icon(
-                                  MaterialCommunityIcons.cart_plus,
+                                cartProvider.getCartItems.containsKey(productsPopular.id) ? MaterialCommunityIcons.check_all :MaterialCommunityIcons.cart_plus,
                                   size: 25,
                                   color: Colors.black,
                                 ),

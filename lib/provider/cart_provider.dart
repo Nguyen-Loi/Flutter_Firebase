@@ -18,7 +18,7 @@ class CartProvider with ChangeNotifier {
 
   void addProductToCart(
       String productId, double price, String title, String imageUrl) {
-        //If cart has product update (quantity + 1)
+    //If cart has product update (quantity + 1)
     if (_cartItems.containsKey(productId)) {
       _cartItems.update(
           productId,
@@ -30,7 +30,7 @@ class CartProvider with ChangeNotifier {
               imageUrl: exitingCartItem.imageUrl));
     } else
     // If cart don't have that product -> (add product in cart)
-     {
+    {
       _cartItems.putIfAbsent(
           productId,
           () => CartAttr(
@@ -55,6 +55,16 @@ class CartProvider with ChangeNotifier {
               quantity: exitingCartItem.quantity - 1,
               imageUrl: exitingCartItem.imageUrl));
     }
-     notifyListeners();
+    notifyListeners();
   }
+ void removeItem(String productId) {
+    _cartItems.remove(productId);
+    notifyListeners();
+  }
+
+  void clearCart() {
+    _cartItems.clear();
+    notifyListeners();
+  }
+
 }

@@ -1,28 +1,34 @@
 import 'package:ECommerceApp/consts/colors.dart';
 import 'package:ECommerceApp/consts/my_icons.dart';
 import 'package:ECommerceApp/provider/cart_provider.dart';
+import 'package:ECommerceApp/services/global_method.dart';
 import 'package:ECommerceApp/widget/cart_empty.dart';
 import 'package:ECommerceApp/widget/cart_full.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class BottomCart extends StatelessWidget {
-  
-
   static const routeName = '/CartScreen';
+  GlobalMethods globalMethods = GlobalMethods();
   @override
   Widget build(BuildContext context) {
     final cartProvider = Provider.of<CartProvider>(context);
-    List products = [];
     return cartProvider.getCartItems.isEmpty
         ? Scaffold(body: CartEmpty())
         : Scaffold(
-            bottomSheet: checkoutSection(context),
+            bottomSheet: checkoutSection(
+                context, cartProvider.totalAmount.toStringAsFixed(2)),
             appBar: AppBar(
-              title: Text('Cart Items Count'),
+              title: Text('Cart (${cartProvider.getCartItems.length})'),
+              backgroundColor: Theme.of(context).backgroundColor,
               actions: [
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    globalMethods.showDialogg(
+                        'Clear cart!', 'Your cart will be cleared!', () {
+                      cartProvider.clearCart();
+                    }, context);
+                  },
                   icon: Icon(MyAppIcons.trash),
                 )
               ],
@@ -32,18 +38,18 @@ class BottomCart extends StatelessWidget {
               child: ListView.builder(
                   itemCount: cartProvider.getCartItems.length,
                   itemBuilder: (BuildContext ctx, int index) {
-                    return CartFull(id: cartProvider.getCartItems.values.toList()[index].id,
-                     productId: cartProvider.getCartItems.keys.toList()[index],
-                      price: cartProvider.getCartItems.values.toList()[index].price,
-                       quatity:cartProvider.getCartItems.values.toList()[index].quantity,
-                        title: cartProvider.getCartItems.values.toList()[index].title,
-                         imageUrl: cartProvider.getCartItems.values.toList()[index].imageUrl,);
+                    return ChangeNotifierProvider.value(
+                        value: cartProvider.getCartItems.values.toList()[index],
+                        child: CartFull(
+                          productId:
+                              cartProvider.getCartItems.keys.toList()[index],
+                        ));
                   }),
             ),
           );
   }
 
-  Widget checkoutSection(BuildContext ctx) {
+  Widget checkoutSection(BuildContext ctx, String totalPrice) {
     return Container(
         decoration: BoxDecoration(
           border: Border(
@@ -98,7 +104,7 @@ class BottomCart extends StatelessWidget {
                     fontWeight: FontWeight.w600),
               ),
               Text(
-                'US \$179.0',
+                'US \$ ${totalPrice}',
                 //textAlign: TextAlign.center,
                 style: TextStyle(
                     color: Colors.blue,

@@ -1,4 +1,5 @@
-import 'package:ECommerceApp/inner_screens/product_details.dart';
+import 'package:ECommerceApp/provider/favs_provider.dart';
+import 'package:ECommerceApp/screens/product_details.dart';
 import 'package:ECommerceApp/models/product.dart';
 import 'package:ECommerceApp/provider/cart_provider.dart';
 import 'package:flutter/material.dart';
@@ -9,8 +10,8 @@ class PopularProducts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cartProvider = Provider.of<CartProvider>(context);
-
-    final productsPopular = Provider.of<Product>(context);
+final favsProvider = Provider.of<FavsProvider>(context);
+    final productsModel = Provider.of<Product>(context);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
@@ -34,7 +35,7 @@ class PopularProducts extends StatelessWidget {
               bottomRight: Radius.circular(10.0),
             ),
             onTap: () => Navigator.pushNamed(context, ProductDetails.routeName,
-                arguments: productsPopular.id),
+                arguments: productsModel.id),
             child: Column(
               children: [
                 Stack(
@@ -43,7 +44,7 @@ class PopularProducts extends StatelessWidget {
                       height: 170,
                       decoration: BoxDecoration(
                           image: DecorationImage(
-                              image: NetworkImage(productsPopular.imageUrl),
+                              image: NetworkImage(productsModel.imageUrl),
                               fit: BoxFit.fill)),
                     ),
                     Positioned(
@@ -51,7 +52,7 @@ class PopularProducts extends StatelessWidget {
                       top: 10,
                       child: Icon(
                         Entypo.star,
-                        color: Colors.grey.shade800,
+                        color: favsProvider.getFavsItems.containsKey(productsModel.id)?Colors.red: Colors.grey.shade800,
                       ),
                     ),
                     Positioned(
@@ -84,7 +85,7 @@ class PopularProducts extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        productsPopular.title,
+                        productsModel.title,
                         maxLines: 1,
                         style: TextStyle(
                             fontSize: 18.0, fontWeight: FontWeight.bold),
@@ -94,7 +95,7 @@ class PopularProducts extends StatelessWidget {
                         children: [
                           Flexible(
                             child: Text(
-                              productsPopular.description,
+                              productsModel.description,
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
@@ -110,18 +111,18 @@ class PopularProducts extends StatelessWidget {
                             child: InkWell(
                                 borderRadius: BorderRadius.circular(30.0),
                               onTap: 
-                                cartProvider.getCartItems.containsKey(productsPopular.id)?(){
+                                cartProvider.getCartItems.containsKey(productsModel.id)?(){
                                  
                                 }: () {
-                      cartProvider.addProductToCart(productsPopular.id, productsPopular.price,
-                          productsPopular.title, productsPopular.imageUrl);
+                      cartProvider.addProductToCart(productsModel.id, productsModel.price,
+                          productsModel.title, productsModel.imageUrl);
                     },
                               
                             
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Icon(
-                                cartProvider.getCartItems.containsKey(productsPopular.id) ? MaterialCommunityIcons.check_all :MaterialCommunityIcons.cart_plus,
+                                cartProvider.getCartItems.containsKey(productsModel.id) ? MaterialCommunityIcons.check_all :MaterialCommunityIcons.cart_plus,
                                   size: 25,
                                   color: Colors.black,
                                 ),

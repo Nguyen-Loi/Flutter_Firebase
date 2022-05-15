@@ -1,4 +1,4 @@
-import 'package:ECommerceApp/inner_screens/product_details.dart';
+import 'package:ECommerceApp/screens/product_details.dart';
 import 'package:ECommerceApp/models/product.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

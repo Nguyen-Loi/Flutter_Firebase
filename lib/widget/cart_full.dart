@@ -5,7 +5,7 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:provider/provider.dart';
 
 import 'package:ECommerceApp/consts/colors.dart';
-import 'package:ECommerceApp/inner_screens/product_details.dart';
+import 'package:ECommerceApp/screens/product_details.dart';
 import 'package:ECommerceApp/models/cart_attr.dart';
 import 'package:ECommerceApp/provider/dark_theme_provider.dart';
 

@@ -4,6 +4,7 @@ import 'package:ECommerceApp/consts/my_icons.dart';
 import 'package:ECommerceApp/models/product.dart';
 import 'package:ECommerceApp/provider/cart_provider.dart';
 import 'package:ECommerceApp/provider/dark_theme_provider.dart';
+import 'package:ECommerceApp/provider/favs_provider.dart';
 import 'package:ECommerceApp/provider/products_provider.dart';
 import 'package:ECommerceApp/screens/bottom_cart.dart';
 
@@ -31,7 +32,7 @@ class _ProductDetailsState extends State<ProductDetails> {
     final productId = ModalRoute.of(context)?.settings.arguments as String;
     final prodAttr = productsProvider.findById(productId);
     final cartProvider = Provider.of<CartProvider>(context);
-
+    final favsProvider = Provider.of<FavsProvider>(context);
     return Scaffold(
       appBar: AppBar(
           backgroundColor: Colors.transparent,
@@ -285,12 +286,19 @@ class _ProductDetailsState extends State<ProductDetails> {
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     shape: RoundedRectangleBorder(side: BorderSide.none),
                     color: Colors.redAccent.shade400,
-                    onPressed: cartProvider.getCartItems.containsKey(productId)?(){}: () {
-                      cartProvider.addProductToCart(productId, prodAttr.price,
-                          prodAttr.title, prodAttr.imageUrl);
-                    },
+                    onPressed: cartProvider.getCartItems.containsKey(productId)
+                        ? () {}
+                        : () {
+                            cartProvider.addProductToCart(
+                                productId,
+                                prodAttr.price,
+                                prodAttr.title,
+                                prodAttr.imageUrl);
+                          },
                     child: Text(
-                      cartProvider.getCartItems.containsKey(productId)?'In Cart' :'Add to Cart'.toUpperCase(),
+                      cartProvider.getCartItems.containsKey(productId)
+                          ? 'In Cart'
+                          : 'Add to Cart'.toUpperCase(),
                       style: TextStyle(fontSize: 16, color: Colors.white),
                     ),
                   ),
@@ -324,11 +332,14 @@ class _ProductDetailsState extends State<ProductDetails> {
                   height: 50,
                   child: InkWell(
                     splashColor: ColorsConsts.favColor,
-                    onTap: () {},
+                    onTap: () {
+                      favsProvider.addAndRemoveFromFav(productId,
+                          prodAttr.price, prodAttr.title, prodAttr.imageUrl);
+                    },
                     child: Center(
                       child: Icon(
-                        MyAppIcons.wishlist,
-                        color: ColorsConsts.white,
+                       favsProvider.getFavsItems.containsKey(productId)?Icons.favorite:  MyAppIcons.wishlist,
+                        color: favsProvider.getFavsItems.containsKey(productId)? Colors.red : Colors.white,
                       ),
                     ),
                   ),

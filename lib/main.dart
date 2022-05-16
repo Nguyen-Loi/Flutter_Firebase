@@ -1,6 +1,9 @@
 import 'package:ECommerceApp/consts/theme_data.dart';
 import 'package:ECommerceApp/inner_screens/brands_navigation_rail.dart';
 import 'package:ECommerceApp/inner_screens/categories_feeds.dart';
+import 'package:ECommerceApp/screens/auth/login.dart';
+import 'package:ECommerceApp/screens/auth/sign_up.dart';
+import 'package:ECommerceApp/screens/landing_page.dart';
 import 'package:ECommerceApp/screens/product_details.dart';
 import 'package:ECommerceApp/models/cart_attr.dart';
 import 'package:ECommerceApp/provider/cart_provider.dart';
@@ -53,9 +56,8 @@ class _MyAppState extends State<MyApp> {
             return MaterialApp(
               title: 'Flutter Demo',
               theme: Styles.themeData(themeChangeProvider.darkTheme, context),
-              home: BottomViewScreen(),
+              home: LandingPage(),
               routes: {
-              //   '/': (ctx) => LandingPage(),
               BrandNavigationRailScreen.routeName: (ctx) =>
                   BrandNavigationRailScreen(),
               BottomCart.routeName: (ctx) => BottomCart(),
@@ -63,6 +65,8 @@ class _MyAppState extends State<MyApp> {
               WishlistScreen.routeName: (ctx) => WishlistScreen(),
                 ProductDetails.routeName: (ctx) => ProductDetails(),
               CategoriesFeedsScreen.routeName: (ctx) => CategoriesFeedsScreen(),
+                            LoginScreen.routeName: (ctx) => LoginScreen(),
+              SignUpScreen.routeName: (ctx) => SignUpScreen(),
             },
             );
           }));

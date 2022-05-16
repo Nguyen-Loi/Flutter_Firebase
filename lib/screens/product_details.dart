@@ -11,6 +11,7 @@ import 'package:ECommerceApp/screens/bottom_cart.dart';
 import 'package:ECommerceApp/screens/wishlist.dart';
 import 'package:ECommerceApp/widget/feeds_products.dart';
 import 'package:ECommerceApp/widget/popular_products.dart';
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -43,16 +44,35 @@ class _ProductDetailsState extends State<ProductDetails> {
             style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.normal),
           ),
           actions: <Widget>[
-            IconButton(
-              icon: Icon(
-                MyAppIcons.wishlist,
-                color: ColorsConsts.favColor,
-              ),
-              onPressed: () {
-                Navigator.of(context).pushNamed(WishlistScreen.routeName);
-              },
+            Consumer<FavsProvider>(
+              builder: (_,favs, ch) {
+                return Badge(
+                  badgeColor: ColorsConsts.cartBadgeColor,
+                  animationType: BadgeAnimationType.slide,
+                  toAnimate: true,
+                  position: BadgePosition.topEnd(top: 5, end: 7),
+                  badgeContent: Text(favs.getFavsItems.length.toString()),
+                  child: IconButton(
+                    icon: Icon(
+                      MyAppIcons.wishlist,
+                      color: ColorsConsts.favColor,
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(WishlistScreen.routeName);
+                    },
+                  ),
+                );
+              }
             ),
-            IconButton(
+            Consumer<CartProvider>(
+              builder: (_,cart, ch) {
+                return Badge(
+                  badgeColor: ColorsConsts.cartBadgeColor,
+                  animationType: BadgeAnimationType.slide,
+                  toAnimate: true,
+                  position: BadgePosition.topEnd(top: 5, end: 7),
+                  badgeContent: Text(cart.getCartItems.length.toString()),
+                  child: IconButton(
               icon: Icon(
                 MyAppIcons.cart,
                 color: ColorsConsts.cartColor,
@@ -60,6 +80,9 @@ class _ProductDetailsState extends State<ProductDetails> {
               onPressed: () {
                 Navigator.of(context).pushNamed(BottomCart.routeName);
               },
+            ),
+                );
+              }
             ),
           ]),
       body: Stack(

@@ -1,5 +1,6 @@
 import 'package:ECommerceApp/consts/colors.dart';
 import 'package:ECommerceApp/consts/my_icons.dart';
+import 'package:ECommerceApp/screens/landing_page.dart';
 import 'package:ECommerceApp/screens/wishlist.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -180,10 +181,14 @@ class _BottomUserInfoState extends State<BottomUserInfo> {
                       switchActiveColor: Colors.indigo,
                       title: Text('Dark theme'),
                     ),
-                    userListTile(
-                        title: 'Logout',
-                        subTitle: '',
-                        iconLeading: Icons.exit_to_app_rounded)
+                    GestureDetector(
+                      onTap: ()=> Navigator.pushAndRemoveUntil(context, 
+  MaterialPageRoute(builder: (_) => LandingPage()), (route) => false),
+                      child: userListTile(
+                          title: 'Logout',
+                          subTitle: '',
+                          iconLeading: Icons.exit_to_app_rounded),
+                    )
                   ],
                 ),
               )

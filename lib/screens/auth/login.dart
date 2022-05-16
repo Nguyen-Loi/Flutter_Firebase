@@ -1,4 +1,5 @@
 import 'package:ECommerceApp/consts/colors.dart';
+import 'package:ECommerceApp/screens/bottom_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:wave/config.dart';
@@ -27,6 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
     FocusScope.of(context).unfocus();
     if (isValid) {
       _formKey.currentState!.save();
+      Navigator.pushReplacement(context,  MaterialPageRoute(builder: (context) => BottomViewScreen()));
     }
   }
 
@@ -82,6 +84,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 30,
                 ),
                 Form(
+                  //To your key
                     key: _formKey,
                     child: Column(
                       children: [
